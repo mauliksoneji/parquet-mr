@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.gojek.offset;
+
+option java_multiple_files = true;
+option java_package = "com.gojek.offset";
+option java_outer_classname = "OffsetMetadataProto";
+
+message OffsetMetadata {
+    int64 message_offset = 536870907;
+    int32 message_partition = 536870908;
+    string message_topic = 536870909;
+    google.protobuf.Timestamp message_timestamp = 536870910;
+    google.protobuf.Timestamp load_time = 536870911;
+}
