@@ -14,16 +14,16 @@ before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 
-install: mvn install -q -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn --batch-mode -DskipTests=true -Dmaven.javadoc.skip=true -Dsource.skip=true | pv -fbi 60 > mvn_install.log || (cat mvn_install.log && false)
+install: mvn install --batch-mode -DskipTests=true -Dmaven.javadoc.skip=true -Dsource.skip=true | pv -fbi 60 > mvn_install.log || (cat mvn_install.log && false)
 
 jobs:
   include:
     - stage: test
       name: "Check"
-      script: mvn verify -q -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn --batch-mode javadoc:javadoc -P travis,$HADOOP_PROFILE
+      script: mvn verify --batch-mode javadoc:javadoc -P travis,$HADOOP_PROFILE
     - stage: publish
 #      if: branch = nexus-release
       name: "Publish"
-      script: mvn deploy -q -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn --settings `pwd`/settings.xml -DskipTests=true
+      script: mvn deploy --settings `pwd`/settings.xml -DskipTests=true
 #      on:
 #        tags: true
