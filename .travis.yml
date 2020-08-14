@@ -22,8 +22,7 @@ jobs:
       name: "Check"
       script: mvn verify --batch-mode javadoc:javadoc -P travis,$HADOOP_PROFILE
     - stage: publish
-#      if: branch = nexus-release
       name: "Publish"
       script: mvn deploy --settings `pwd`/settings.xml -DskipTests=true
-#      on:
-#        tags: true
+      on:
+        tags: true
