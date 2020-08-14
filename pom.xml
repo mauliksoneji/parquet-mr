@@ -121,7 +121,7 @@
 
     <!-- properties for the profiles -->
     <surefire.argLine>-Xmx512m</surefire.argLine>
-    <surefire.logLevel>INFO</surefire.logLevel>
+    <surefire.logLevel>WARN</surefire.logLevel>
   </properties>
 
   <modules>
@@ -645,48 +645,48 @@
       </properties>
     </profile>
 
-      <profile>
-          <id>ossrh</id>
-          <properties>
-              <gpg.executable>${env.GPG_EXECUTABLE}</gpg.executable>
-              <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-          </properties>
-          <activation>
-              <property>
-                  <name>performRelease</name>
-                  <value>true</value>
-              </property>
-          </activation>
-          <build>
-              <plugins>
-                  <plugin>
-                      <groupId>org.apache.maven.plugins</groupId>
-                      <artifactId>maven-gpg-plugin</artifactId>
-                      <version>1.5</version>
-                      <executions>
-                          <execution>
-                              <id>sign-artifacts</id>
-                              <phase>verify</phase>
-                              <goals>
-                                  <goal>sign</goal>
-                              </goals>
-                          </execution>
-                      </executions>
-                  </plugin>
-                  <plugin>
-                      <groupId>org.sonatype.plugins</groupId>
-                      <artifactId>nexus-staging-maven-plugin</artifactId>
-                      <version>1.6.2</version>
-                      <extensions>true</extensions>
-                      <configuration>
-                          <serverId>ossrh</serverId>
-                          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                          <stagingProfileId>9bf6aebae3df9b</stagingProfileId>
-                          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                      </configuration>
-                  </plugin>
-              </plugins>
-          </build>
-      </profile>
+    <profile>
+        <id>ossrh</id>
+        <properties>
+            <gpg.executable>${env.GPG_EXECUTABLE}</gpg.executable>
+            <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+        </properties>
+        <activation>
+            <property>
+                <name>performRelease</name>
+                <value>true</value>
+            </property>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.5</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.2</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <stagingProfileId>9bf6aebae3df9b</stagingProfileId>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
   </profiles>
 </project>

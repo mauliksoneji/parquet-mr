@@ -14,7 +14,7 @@ before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 
-install: mvn install --batch-mode -DskipTests=true -Dmaven.javadoc.skip=true -Dsource.skip=true | pv -fbi 60 > mvn_install.log || (cat mvn_install.log && false)
+install: mvn install --batch-mode -DskipTests=true -Dmaven.javadoc.skip=true -Dsource.skip=true  -P travis | pv -fbi 60 > mvn_install.log || (cat mvn_install.log && false)
 
 jobs:
   include:
@@ -23,6 +23,6 @@ jobs:
       script: mvn verify --batch-mode javadoc:javadoc -P travis,$HADOOP_PROFILE
     - stage: publish
       name: "Publish"
-      script: mvn deploy --settings `pwd`/settings.xml -DskipTests=true
+      script: mvn deploy --settings `pwd`/settings.xml -DskipTests=true -P travis
       on:
         tags: true
